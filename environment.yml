@@ -1,0 +1,7 @@
+name: pyrt
+dependencies:
+    - python
+    - numpy
+    - jupyterlab
+    - matplotlib
+    - Pillow
