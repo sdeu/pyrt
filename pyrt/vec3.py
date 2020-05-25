@@ -2,7 +2,7 @@ import numpy as np
 
 class Vec3:
     def __init__(self, x, y, z):
-        self.__vec = np.array([x,y,z], dtype=np.float)
+        self.__vec = np.array([x,y,z,0], dtype=np.float)
 
     @property
     def vec(self):
@@ -28,7 +28,7 @@ class Vec3:
         return Vec3.from_array(self.__vec / other)
 
     def normalize(self):
-        return Vec3.from_array(self.__vec / np.linalg.norm(self.__vec))
+        return Vec3.from_array(self.__vec / np.linalg.norm(self.__vec[:3]))
 
     @property
     def x(self):
