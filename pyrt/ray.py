@@ -16,3 +16,6 @@ class Ray:
 
     def point_at(self, t):
         return self.__origin + (t * self.__direction)
+
+    def __str__(self):
+        return f'{self.origin} + t*{self.direction}'

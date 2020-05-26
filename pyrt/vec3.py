@@ -53,3 +53,6 @@ class Vec3:
     @property
     def b(self):
         return (int)(self.z * 255.0)
+
+    def __str__(self):
+        return f'({self.x},{self.y},{self.z})'

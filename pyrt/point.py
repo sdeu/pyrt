@@ -41,3 +41,6 @@ class Point3:
     @property
     def z(self):
         return self.__vec[2]
+
+    def __str__(self):
+        return f'({self.x},{self.y},{self.z})'
