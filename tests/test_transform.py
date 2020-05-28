@@ -25,3 +25,9 @@ def test_translate_ray():
     t = m @ r
     assert np.array_equal(t.origin.vec, np.array([1.0, 2.0, 3.0, 1.0]))
     assert np.array_equal(t.direction.vec, np.array([0.0, 0.0, -1.0, 0.0]))
+
+def test_translate_ray_2():
+    r = Ray(Point3(0, 0, 0), Vec3(0, 0, -1))
+    m = Transform.translation(0, 0, -10)
+    t = m @ r
+    assert np.array_equal(t.origin.vec, np.array([0.0, 0.0, -10.0, 1.0]))

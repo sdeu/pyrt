@@ -21,3 +21,7 @@ def test_ray_intersection():
     ray4 = Ray(Point3(0,0,3), Vec3(1.2873563218390802,0.33333333333333326,-1.0))
     s2 = Sphere(10, Transform.translation(0, 0, 0))
     assert s2.hit(ray4) is not None
+
+    ray5 = Ray(Point3(0,0,0), Vec3(1.2873563218390802,0.33333333333333326,-1.0))
+    s3 = Sphere(1, Transform.translation(0, 0, 10))
+    assert s3.hit(ray5) is None

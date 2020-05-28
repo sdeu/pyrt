@@ -13,10 +13,14 @@ class Vec3:
         return Vec3(v[0], v[1], v[2])
 
     def __add__(self, other):
-        return Vec3.from_array(self.__vec + other.__vec)
+        if isinstance(other, Vec3):
+            return Vec3.from_array(self.vec + other.__vec)    
+        return NotImplemented
 
     def __sub__(self, other):
-        return Vec3.from_array(self.__vec - other.__vec)
+        if isinstance(other, Vec3):
+            return Vec3.from_array(self.vec - other.__vec)
+        return NotImplemented
 
     def __mul__(self, other):
         return Vec3.from_array(self.__vec * other)
@@ -28,7 +32,7 @@ class Vec3:
         return Vec3.from_array(self.__vec / other)
 
     def normalize(self):
-        return Vec3.from_array(self.__vec / np.linalg.norm(self.__vec[:3]))
+        return Vec3.from_array(self.vec / np.linalg.norm(self.vec[:3]))
 
     @property
     def x(self):

@@ -16,6 +16,10 @@ class Transform():
         inv = np.linalg.inv(self.__matrix)
         return Transform(inv, self.__matrix)
 
+    @property
+    def matrix(self):
+        return self.__matrix
+
     def __matmul__(self, other):
         if isinstance(other, Vec3):
             return Vec3.from_array(self.__matrix @ other.vec)

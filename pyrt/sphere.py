@@ -1,4 +1,5 @@
 import numpy as np
+from math import sqrt
 from .shape import Shape
 from .ray import Ray
 
@@ -19,10 +20,31 @@ class Sphere(Shape):
         if d < 0:
             return None
 
-        roots = np.roots([A,B,C])
+        root_d = sqrt(d)
 
-        test = np.amin(np.where(roots.real >= 0)) if roots is not None else None
-        if roots is not None and np.amin(roots.real) >= 0:
-            return np.amin(roots.real)
+        q = 1
+        if B < 0:
+            q = -0.5 * (B - root_d)
+        else:
+            q = -0.5 * (B + root_d)
 
-        return None
+        t0 = q / A
+        t1 = C / q
+
+        if t1 < 0 and t0 < 0:
+            return None
+
+        if t0 < 0 and t1 > 0:
+            return t1
+
+        if t1 < 0 and t0 > 0:
+            return t0
+        
+        return min(t0, t1)
+        # roots = np.roots([A,B,C])
+        # if roots is not None:
+        #     positive_roots = np.where(roots.real >= 0)
+        #     if len(positive_roots) > 0:
+        #         return np.amin(positive_roots)
+
+        # return None

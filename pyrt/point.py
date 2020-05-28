@@ -1,4 +1,5 @@
 import numpy as np
+from .vec3 import Vec3
 
 class Point3:
     def __init__(self, x, y, z):
@@ -13,22 +14,32 @@ class Point3:
         return self.__vec
 
     def __add__(self, other):
-        return Point3.from_array(self.__vec + other.__vec)
+        if isinstance(other, Point3):
+            return Vec3.from_array(self.vec + other.vec)
+        if isinstance(other, Vec3):
+            return Point3.from_array(self.vec + other.vec)
+        raise TypeError(type(other))
+
+    def __radd__(self, other):
+        if isinstance(other, Point3):
+            return Vec3.from_array(self.vec + other.vec)
+        if isinstance(other, Vec3):
+            return Point3.from_array(self.vec + other.vec)
+        raise TypeError(type(other))
 
     def __sub__(self, other):
-        return Point3.from_array(self.__vec - other.__vec)
+        if isinstance(other, Point3):
+            return Vec3.from_array(self.vec - other.vec)
+        if isinstance(other, Vec3):
+            return Point3.from_array(self.vec - other.vec)
+        raise TypeError(type(other))
 
-    def __mul__(self, other):
-        return Point3.from_array(self.__vec * other)
-
-    def __rmul__(self, other):
-        return Point3.from_array(self.__vec * other)
-
-    def __truediv__(self, other):
-        return Point3.from_array(self.__vec / other)
-
-    def normalize(self):
-        return Point3.from_array(self.__vec / np.linalg.norm(self.__vec[:3]))
+    def __rsub__(self, other):
+        if isinstance(other, Point3):
+            return Vec3.from_array(self.vec - other.vec)
+        if isinstance(other, Vec3):
+            return Point3.from_array(self.vec - other.vec)
+        raise TypeError(type(other))
 
     @property
     def x(self):
