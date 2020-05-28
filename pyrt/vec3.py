@@ -31,6 +31,14 @@ class Vec3:
     def __truediv__(self, other):
         return Vec3.from_array(self.__vec / other)
 
+    def __eq__(self, other):
+        if isinstance(other, Vec3):
+            return np.array_equal(self.__vec, other.__vec)
+        return NotImplemented
+
+    def __hash__(self):
+        return hash(self.__vec)
+
     def normalize(self):
         return Vec3.from_array(self.vec / np.linalg.norm(self.vec[:3]))
 

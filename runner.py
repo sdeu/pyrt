@@ -6,7 +6,7 @@ def color(ray, scene):
     for shape in scene:
         hit = shape.hit(ray)
         if hit is not None:
-            return Vec3(0.9, 0.1, 0.1)
+            return 0.5 * (hit.normal + Vec3(1,1,1))
             
     d = ray.direction.normalize()
     t = 0.5 * (d.y + 1.0)

@@ -2,6 +2,9 @@ import numpy as np
 from math import sqrt
 from .shape import Shape
 from .ray import Ray
+from .intersection import Intersection
+from .point import Point3
+from .vec3 import Vec3
 
 class Sphere(Shape):
     def __init__(self, radius, transformation):
@@ -34,13 +37,17 @@ class Sphere(Shape):
         if t1 < 0 and t0 < 0:
             return None
 
+        t = min(t0, t1)
+
         if t0 < 0 and t1 > 0:
-            return t1
+            t = t1
 
         if t1 < 0 and t0 > 0:
-            return t0
+            t = t0
+
+        intersection_point = ray.point_at(t)
+        return Intersection(intersection_point, Vec3.from_array(intersection_point.vec).normalize(), t)
         
-        return min(t0, t1)
         # roots = np.roots([A,B,C])
         # if roots is not None:
         #     positive_roots = np.where(roots.real >= 0)

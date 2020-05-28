@@ -8,20 +8,14 @@ from pyrt.sphere import Sphere
 
 def test_ray_intersection():
     s = Sphere(1, Transform.translation(0, 0, 0))
+    ray = Ray(Point3(0, 0, 3), Vec3(0, 0, -1))
+    i = s.hit(ray)
+    assert i is not None
+    assert i.t == 2
+    assert i.point == Point3(0,0,1)
+    assert i.normal == Vec3(0,0,1)
 
-    ray1 = Ray(Point3(0, 0, 3), Vec3(0, 0, -1))
-    assert s.hit(ray1) == 2
-
-    ray2 = Ray(Point3(0, 0, 3), Vec3(0, 1, 0))
-    assert s.hit(ray2) is None
-
-    ray3 = Ray(Point3(0,0,3), Vec3(0, 0, 1))
-    assert s.hit(ray3) is None
-
-    ray4 = Ray(Point3(0,0,3), Vec3(1.2873563218390802,0.33333333333333326,-1.0))
-    s2 = Sphere(10, Transform.translation(0, 0, 0))
-    assert s2.hit(ray4) is not None
-
-    ray5 = Ray(Point3(0,0,0), Vec3(1.2873563218390802,0.33333333333333326,-1.0))
-    s3 = Sphere(1, Transform.translation(0, 0, 10))
-    assert s3.hit(ray5) is None
+def test_ray_intersection_miss():
+    s = Sphere(1, Transform.translation(0, 0, 0))
+    ray = Ray(Point3(0, 0, 3), Vec3(0, 1, 0))
+    assert s.hit(ray) is None
