@@ -1,6 +1,8 @@
 import numpy as np
 from PIL import Image
 from pyrt import *
+from random import uniform
+from tqdm import trange
 
 def color(ray, scene):
     return color_internal(ray, scene, 5)
@@ -26,8 +28,10 @@ def reflect(ray, intersection):
     return Ray(intersection.point, r)
 
 def main():
+    image_width = 400
+    samples = 50
+
     ascpect_ratio = 16.0 / 9.0
-    image_width = 100
     image_height = (int)(image_width / ascpect_ratio)
     print(f'{image_width} x {image_height}')
 
@@ -39,12 +43,15 @@ def main():
 
     camera = Camera(image_width)
 
-    for j in range(image_height-1, -1, -1):
+    for j in trange(image_height-1, -1, -1):
         for i in range(image_width):
-            u = i / (float)(image_width-1)
-            v = j / (float)(image_height-1)
-            ray = camera.ray(u, v)
-            c = color(ray,scene)
+            c = Vec3(0,0,0)
+            for s in range(samples):
+                u = (i + uniform(0, 1)) / (float)(image_width-1)
+                v = (j + uniform(0, 1)) / (float)(image_height-1)
+                ray = camera.ray(u, v)
+                c = c + color(ray,scene)
+            c = c / samples
             image[j, i] = [c.r, c.g, c.b]
 
     im = Image.fromarray(image, mode='RGB')

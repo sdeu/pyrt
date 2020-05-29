@@ -5,7 +5,6 @@ from .ray import Ray
 class Camera:
     def __init__(self, width):
         ascpect_ratio = 16.0 / 9.0
-        image_height = (int)(width / ascpect_ratio)
 
         viewport_height = 2.0   
         viewport_width = ascpect_ratio * viewport_height
