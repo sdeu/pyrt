@@ -7,10 +7,11 @@ from .point import Point3
 from .vec3 import Vec3
 
 class Sphere(Shape):
-    def __init__(self, radius, transformation):
+    def __init__(self, radius, transformation, material):
         self.__radius = radius
         self.__object_to_world = transformation
         self.__world_to_object = transformation.inverse
+        self.__material = material
 
     def hit(self, ray):
         r = self.__world_to_object @ ray
@@ -46,7 +47,7 @@ class Sphere(Shape):
             t = t0
 
         intersection_point = ray.point_at(t)
-        return Intersection(intersection_point, Vec3.from_array(intersection_point.vec).normalize(), t)
+        return Intersection(intersection_point, Vec3.from_array(intersection_point.vec).normalize(), t, self.__material)
         
         # roots = np.roots([A,B,C])
         # if roots is not None:
