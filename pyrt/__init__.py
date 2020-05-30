@@ -4,5 +4,5 @@ from .transform import Transform
 from .shape import Shape
 from .sphere import Sphere
 from .ray import Ray
-from .material import Material, SimpleMaterial
+from .material import Material, Lambert
 from .camera import Camera

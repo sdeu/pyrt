@@ -23,9 +23,13 @@ class Vec3:
         return NotImplemented
 
     def __mul__(self, other):
+        if isinstance(other, Vec3):
+            return Vec3.from_array(self.vec * other.__vec)
         return Vec3.from_array(self.__vec * other)
 
     def __rmul__(self, other):
+        if isinstance(other, Vec3):
+            return Vec3.from_array(self.vec * other.__vec)
         return Vec3.from_array(self.__vec * other)
 
     def __truediv__(self, other):
@@ -65,6 +69,10 @@ class Vec3:
     @property
     def b(self):
         return (int)(self.z * 255.0)
+
+    @property
+    def length_2(self):
+        return np.dot(self.vec[:3], self.vec[:3])
 
     def __str__(self):
         return f'({self.x},{self.y},{self.z})'
