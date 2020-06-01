@@ -46,8 +46,8 @@ class Sphere(Shape):
         if t1 < 0 and t0 > 0:
             t = t0
 
-        intersection_point = ray.point_at(t)
-        return Intersection(intersection_point, Vec3.from_array(intersection_point.vec).normalize(), t, self.__material)
+        intersection_point = r.point_at(t)
+        return Intersection(self.__object_to_world @ intersection_point, Vec3.from_array(intersection_point.vec).normalize(), t, self.__material)
         
         # roots = np.roots([A,B,C])
         # if roots is not None:

@@ -17,20 +17,19 @@ def color_internal(ray, scene, depth):
         hit = shape.hit(ray)
         if hit is not None:
             if (depth >= 0):
-                r, a = hit.material.scatter(ray, hit)
-                return a * color_internal(r, scene, depth-1)
+                result = hit.material.scatter(ray, hit)
+                if result is not None:
+                    r,a = result
+                    return a * color_internal(r, scene, depth-1)
+                return Vec3(0,0,0)
             
     d = ray.direction.normalize()
     t = 0.5 * (d.y + 1.0)
     return ((1.0 - t)*Vec3(1.0, 1.0, 1.0)) + (t*Vec3(0.5, 0.7, 1.0))
 
-def reflect(ray, intersection):
-    r = ray.direction - 2 * np.dot(intersection.normal.vec[:3], ray.direction.vec[:3]) * intersection.normal
-    return Ray(intersection.point, r)
-
 def main():
-    image_width = 400
-    samples = 30
+    image_width = 100
+    samples = 10
 
     ascpect_ratio = 16.0 / 9.0
     image_height = (int)(image_width / ascpect_ratio)
@@ -40,6 +39,7 @@ def main():
 
     scene = []
     scene.append(Sphere(1, Transform.translation(0,0,-5), Lambert(Vec3(1.0, 0.0, 0.0))))
+    scene.append(Sphere(2, Transform.translation(-3,0,-5), Metal(Vec3(0.9,0.9,0.9))))
     scene.append(Sphere(200, Transform.translation(1,200.5,-10), Lambert(Vec3(0.0, 1.0, 0.0))))
 
     camera = Camera(image_width)
