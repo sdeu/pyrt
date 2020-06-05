@@ -6,3 +6,5 @@ from .sphere import Sphere
 from .ray import Ray
 from .material import Material, Lambert, Metal
 from .camera import Camera
+from .film import Film
+from .render import Renderer

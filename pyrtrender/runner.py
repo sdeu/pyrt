@@ -31,7 +31,7 @@ def color_internal(ray, scene, depth):
 @app.task
 def render(scanlines=[]):
     image_width = 100
-    samples = 10
+    samples = 1
 
     ascpect_ratio = 16.0 / 9.0
     image_height = (int)(image_width / ascpect_ratio)
@@ -62,7 +62,7 @@ def render(scanlines=[]):
             corrected = Vec3(c.x**(1/2.2), c.y**(1/2.2), c.z**(1/2.2))
             image[j, i] = [corrected.r, corrected.g, corrected.b]
 
-    im = Image.fromarray(image, mode='RGB')
+    im = Film.fromarray(image, mode='RGB')
     im.save("test.bmp")
 
 if __name__ == "__main__":
