@@ -1,5 +1,5 @@
 from random import uniform
-from tqdm import trange
+from tqdm import tqdm
 from .vec3 import Vec3
 
 
@@ -12,8 +12,11 @@ class Renderer:
         self.height = height
         self.width = width
 
-    def render(self):
-        for j in trange(self.height - 1, -1, -1):
+    def render(self, scanlines=[]):
+        lines = scanlines
+        if len(lines) == 0:
+            lines = range(self.height - 1, -1, -1)
+        for j in tqdm(lines):
             for i in range(self.width):
                 c = Vec3(0, 0, 0)
                 for s in range(self.sample):
