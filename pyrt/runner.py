@@ -1,4 +1,4 @@
-from pyrt import *
+from .pyrt import *
 
 
 def main():

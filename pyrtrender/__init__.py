@@ -1,2 +1,1 @@
-from .worker import app
-from .runner import render
+from .pyrtrender import *

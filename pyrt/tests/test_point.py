@@ -1,4 +1,3 @@
-import pytest
 from pyrt.point import Point3
 from pyrt.vec3 import Vec3
 

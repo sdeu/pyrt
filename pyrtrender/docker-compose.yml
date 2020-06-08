@@ -1,0 +1,20 @@
+version: '3.5'
+services:
+  worker:
+    build: ./
+    image: &pyrtrender pyrtrender
+    restart: "no"
+    environment: &env
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=password
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    command: ["celery", "worker", "--app=worker.render", "--concurrency=1", "--hostname=worker@%h", "--loglevel=INFO"]
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:4
+    environment: *env
+    ports:
+      - 6379:6379

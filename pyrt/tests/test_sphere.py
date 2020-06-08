@@ -1,5 +1,3 @@
-import pytest
-import numpy as np
 from pyrt.transform import Transform
 from pyrt.point import Point3
 from pyrt.vec3 import Vec3

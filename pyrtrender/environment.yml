@@ -1,0 +1,10 @@
+name: pyrt
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+    - python
+    - numpy
+    - Pillow
+    - tqdm
+    - celery

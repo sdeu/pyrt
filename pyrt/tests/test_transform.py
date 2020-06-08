@@ -1,4 +1,3 @@
-import pytest
 import numpy as np
 from pyrt.transform import Transform
 from pyrt.point import Point3
