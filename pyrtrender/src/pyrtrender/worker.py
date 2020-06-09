@@ -3,9 +3,9 @@ import os
 os.environ.setdefault('FORKED_BY_MULTIPROCESSING', '1')
 
 app = Celery('render',
-             broker='amqp://',
-             backend='amqp://',
-             imports=['tasks'])
+             broker='redis://',
+             backend='redis://',
+             include=['pyrtrender.tasks'])
 
 if __name__ == '__main__':
     app.start()

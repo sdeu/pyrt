@@ -9,7 +9,7 @@ services:
       - RABBITMQ_DEFAULT_PASS=password
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
-    command: ["celery", "worker", "--app=worker.render", "--concurrency=1", "--hostname=worker@%h", "--loglevel=INFO"]
+    command: ["celery", "worker", "--app=pyrtrender.worker", "--concurrency=1", "--hostname=worker@%h", "--loglevel=DEBUG"]
     depends_on:
       - redis
 
