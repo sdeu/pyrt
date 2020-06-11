@@ -1,4 +1,4 @@
-from random import uniform
+from random import uniform, seed
 from tqdm import tqdm
 from .vec3 import Vec3
 
@@ -37,15 +37,15 @@ def color_internal(ray, scene, depth):
     if depth < 0:
         return Vec3(0, 0, 0)
 
-    for shape in scene:
-        hit = shape.hit(ray)
-        if hit is not None:
-            if depth >= 0:
-                result = hit.material.scatter(ray, hit)
-                if result is not None:
-                    r, a = result
-                    return a * color_internal(r, scene, depth - 1)
-                return Vec3(0, 0, 0)
+    hits = list(filter(None, map(lambda s: s.hit(ray), scene)))
+    if len(hits) > 0:
+        hit = min(hits, key=lambda h: h.t)
+        if depth >= 0:
+            result = hit.material.scatter(ray, hit)
+            if result is not None:
+                r, a = result
+                return a * color_internal(r, scene, depth - 1)
+            return Vec3(0, 0, 0)
 
     d = ray.direction.normalize()
     t = 0.5 * (d.y + 1.0)
