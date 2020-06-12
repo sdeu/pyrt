@@ -6,6 +6,7 @@ import jsonpickle
 import requests
 from PIL import Image
 import io
+import numpy as np
 
 STORAGE_HOST = os.getenv('STORAGE_HOST')
 STORAGE_PORT = os.getenv('STORAGE_PORT')
@@ -26,12 +27,13 @@ def combine(images):
         im = Image.open(io.BytesIO(r.content))
 
         if image is None:
-            image = im
+            image = np.array(im)
         else:
-            image = Image.alpha_composite(image, im)
+            image = image + np.array(im)
     
     buffer = io.BytesIO()
-    image.save(buffer, format="png")
+    im = Image.fromarray(image.astype(np.uint8), mode='RGB')
+    im.save(buffer, format="bmp")
 
     url = f'http://{STORAGE_HOST}:{STORAGE_PORT}/combined_{combine.request.id}'
     x = requests.post(url, files={'file':buffer.getvalue()})

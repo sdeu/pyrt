@@ -5,9 +5,9 @@ from celery import chord
 def main():
 
     aspect_ratio = 16.0 / 9.0
-    image_width = 100
+    image_width = 400
     height = int(image_width / aspect_ratio)
-    samples = 10
+    samples = 100
 
     scene = [Sphere(1, Transform.translation(1, -0.5, -5), Lambert(Vec3(1.0, 0.0, 0.0))),
              Sphere(2, Transform.translation(-2, -1.5, -5), Metal(Vec3(0.9, 0.9, 0.9))),
