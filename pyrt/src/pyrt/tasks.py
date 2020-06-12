@@ -28,13 +28,15 @@ def combine(images):
         if image is None:
             image = im
         else:
-            image.paste(im)
+            image = Image.alpha_composite(image, im)
     
     buffer = io.BytesIO()
-    image.save(buffer, format="BMP")
+    image.save(buffer, format="png")
 
     url = f'http://{STORAGE_HOST}:{STORAGE_PORT}/combined_{combine.request.id}'
     x = requests.post(url, files={'file':buffer.getvalue()})
+
+    print(f"Combined image: combined_{combine.request.id}")
 
 
 def render_internal(scene, camera, width, aspect_ratio, samples, scanlines=[]):

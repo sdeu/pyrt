@@ -25,8 +25,8 @@ def main():
 
     print(scanlines)
 
-    # chord(render.s(jscene, jcamera, image_width, aspect_ratio, samples, lines) 
-    # for lines in scanlines)(combine.s()).get()
+    chord(render.s(jscene, jcamera, image_width, aspect_ratio, samples, lines) 
+    for lines in scanlines)(combine.s()).get()
     
     #render.delay(jsonpickle.encode(scene), jsonpickle.encode(camera), image_width, aspect_ratio, samples)
 

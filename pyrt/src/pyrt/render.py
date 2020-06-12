@@ -24,7 +24,7 @@ class Renderer:
                     v = (j + uniform(0, 1)) / float(self.height - 1)
                     ray = self.camera.ray(u, v)
                     c = c + color(ray, self.scene)
-                self.film.set_pixel(i, j, c)
+                self.film.set_pixel(i, j, c / self.sample)
 
 
 def color(ray, scene):

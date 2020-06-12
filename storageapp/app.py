@@ -4,7 +4,7 @@ import werkzeug
 import os
 
 UPLOAD_FOLDER = os.getenv('UPLOAD_FOLDER')
-ACCEPTED_FILE_TYPE = 'bmp'
+ACCEPTED_FILE_TYPE = 'png'
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
