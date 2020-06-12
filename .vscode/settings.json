@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/opt/conda/envs/pyrt/bin/python",
+    "python.pythonPath": "C:\\Users\\sdeu\\AppData\\Local\\Continuum\\anaconda3\\envs\\pyrt\\python.exe",
     "python.testing.pytestArgs": [
         "tests"
     ],

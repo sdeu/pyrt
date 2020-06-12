@@ -2,8 +2,8 @@ from pyrt import *
 
 
 def main():
-    image_width = 400
-    samples = 60
+    image_width = 100
+    samples = 10
 
     aspect_ratio = 16.0 / 9.0
     image_height = int(image_width / aspect_ratio)
@@ -19,6 +19,7 @@ def main():
 
     renderer = Renderer(image_width, image_height, samples, scene, camera, image)
     renderer.render()
+    image.save()
 
 
 if __name__ == "__main__":

@@ -26,8 +26,6 @@ class Renderer:
                     c = c + color(ray, self.scene)
                 self.film.set_pixel(i, j, c)
 
-        self.film.save()
-
 
 def color(ray, scene):
     return color_internal(ray, scene, 5)

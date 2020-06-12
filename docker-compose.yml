@@ -1,0 +1,39 @@
+version: '3.5'
+services:
+  renderer:
+    build: ./pyrt
+    restart: "no"
+    ports:
+      - "5000:5000"
+    environment: &env
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=password
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - STORAGE_HOST=storage
+      - STORAGE_PORT=5001
+    command: ["celery", "worker", "--app=pyrt.worker", "--concurrency=1", "--hostname=worker@%h", "--loglevel=DEBUG"]
+    depends_on:
+      - redis
+      - storage
+
+  storage:
+    build: ./storageapp
+    environment:
+      - FLASK_ENV=development
+      - FLASK_RUN_PORT=5001
+      - UPLOAD_FOLDER=/data
+    volumes:
+      - data-volume:/data
+      - ./storageapp:/app
+    ports:
+      - "5001:5001"
+
+  redis:
+    image: redis:4
+    environment: *env
+    ports:
+      - 6379:6379
+
+volumes:
+  data-volume:
