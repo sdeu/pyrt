@@ -35,11 +35,14 @@ def combine(images):
     im = Image.fromarray(image.astype(np.uint8), mode='RGB')
     im.save(buffer, format="bmp")
 
-    url = f'http://{STORAGE_HOST}:{STORAGE_PORT}/combined_{combine.request.id}'
+    image_name = f'combined_{combine.request.id}'
+    url = f'http://{STORAGE_HOST}:{STORAGE_PORT}/{image_name}'
     x = requests.post(url, files={'file':buffer.getvalue()})
 
     print(f"Combined image: combined_{combine.request.id}")
 
+    return image_name
+    
 
 def render_internal(scene, camera, width, aspect_ratio, samples, scanlines=[]):
     height = int(width / aspect_ratio)

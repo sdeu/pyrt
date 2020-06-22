@@ -1,6 +1,7 @@
 from pyrt import *
 import jsonpickle
 from celery import chord
+import requests
 
 def main():
 
@@ -25,10 +26,17 @@ def main():
 
     print(scanlines)
 
-    chord(render.s(jscene, jcamera, image_width, aspect_ratio, samples, lines) 
-    for lines in scanlines)(combine.s()).get()
-    
-    #render.delay(jsonpickle.encode(scene), jsonpickle.encode(camera), image_width, aspect_ratio, samples)
+    callback = combine.s()
+    header = [render.s(jscene, jcamera, image_width, aspect_ratio, samples, lines) 
+    for lines in scanlines]
+
+    result = chord(header)(callback)
+
+    url = f'http://localhost:5001/{result.get()}'
+
+    img_data = requests.get(url).content
+    with open('test.bmp', 'wb') as handler:
+        handler.write(img_data)
 
 if __name__ == "__main__":
     main()
