@@ -1,4 +1,5 @@
 import numpy as np
+from math import sqrt
 
 class Vec3:
     def __init__(self, x, y, z):
@@ -44,7 +45,7 @@ class Vec3:
         return hash(self.__vec)
 
     def normalize(self):
-        return Vec3.from_array(self.vec / np.linalg.norm(self.vec[:3]))
+        return Vec3.from_array(self.vec / sqrt(self.length_2))
 
     @property
     def x(self):
@@ -72,7 +73,7 @@ class Vec3:
 
     @property
     def length_2(self):
-        return np.dot(self.vec[:3], self.vec[:3])
+        return self.__vec[0]**2 + self.__vec[1]**2 + self.__vec[2]**2
 
     def __str__(self):
         return f'({self.x},{self.y},{self.z})'

@@ -1,3 +1,4 @@
+from numba import jit
 import numpy as np
 from math import sqrt
 from .shape import Shape
@@ -14,7 +15,7 @@ class Sphere(Shape):
 
     def hit(self, ray):
         r = self.__world_to_object @ ray
-        t = self.__hit_internal(r)
+        t = hit_internal(r.direction.vec[:3], r.origin.vec[:3], self.__radius)
 
         if t is not None:
             intersection_point = r.point_at(t)
@@ -23,44 +24,38 @@ class Sphere(Shape):
         return None
 
 
-    def __hit_internal(self, r):
-        A = np.dot(r.direction.vec[:3], r.direction.vec[:3])
-        B = 2 * np.dot(r.origin.vec[:3], r.direction.vec[:3])
-        C = np.dot(r.origin.vec[:3], r.origin.vec[:3]) - self.__radius ** 2
+@jit(nopython=True)
+def hit_internal(direction, origin, radius):
+    A = np.dot(direction, direction)
+    B = 2 * np.dot(origin, direction)
+    C = np.dot(origin, origin) - radius ** 2
 
-        d = B ** 2 - 4 * A * C
+    d = B ** 2 - 4 * A * C
 
-        if d < 0:
-            return None
+    if d < 0:
+        return None
 
-        root_d = sqrt(d)
+    root_d = sqrt(d)
 
-        q = 1
-        if B < 0:
-            q = -0.5 * (B - root_d)
-        else:
-            q = -0.5 * (B + root_d)
+    q = 1
+    if B < 0:
+        q = -0.5 * (B - root_d)
+    else:
+        q = -0.5 * (B + root_d)
 
-        t0 = q / A
-        t1 = C / q
+    t0 = q / A
+    t1 = C / q
 
-        if t1 < 0 and t0 < 0:
-            return None
+    if t1 < 0 and t0 < 0:
+        return None
 
-        t = min(t0, t1)
+    t = min(t0, t1)
 
-        if t0 < 0 and t1 > 0:
-            t = t1
+    if t0 < 0 and t1 > 0:
+        t = t1
 
-        if t1 < 0 and t0 > 0:
-            t = t0
+    if t1 < 0 and t0 > 0:
+        t = t0
 
-        return t
+    return t
 
-        # roots = np.roots([A,B,C])
-        # if roots is not None:
-        #     positive_roots = np.where(roots.real >= 0)
-        #     if len(positive_roots) > 0:
-        #         return np.amin(positive_roots)
-
-        # return None
