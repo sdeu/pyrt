@@ -1,16 +1,19 @@
+from dataclasses import dataclass
+from .film import Film
+from .camera import Camera
 from random import uniform, seed
 from tqdm import tqdm
 from .vec3 import Vec3
 
 
+@dataclass
 class Renderer:
-    def __init__(self, width, height, samples, scene, camera, film):
-        self.film = film
-        self.camera = camera
-        self.scene = scene
-        self.sample = samples
-        self.height = height
-        self.width = width
+    film: Film
+    camera: Camera
+    scene: list
+    samples: int
+    height: int
+    width: int
 
     def render(self, scanlines=[]):
         lines = scanlines
@@ -19,12 +22,12 @@ class Renderer:
         for j in tqdm(lines):
             for i in range(self.width):
                 c = Vec3(0, 0, 0)
-                for s in range(self.sample):
+                for s in range(self.samples):
                     u = (i + uniform(0, 1)) / float(self.width - 1)
                     v = (j + uniform(0, 1)) / float(self.height - 1)
                     ray = self.camera.ray(u, v)
                     c = c + color(ray, self.scene)
-                self.film.set_pixel(i, j, c / self.sample)
+                self.film.set_pixel(i, j, c / self.samples)
 
 
 def color(ray, scene):

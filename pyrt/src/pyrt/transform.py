@@ -1,34 +1,33 @@
+from typing import Any
+from dataclasses import dataclass
 import numpy as np
 from .vec3 import Vec3
 from .point import Point3
 from .ray import Ray
 
-class Transform():
-    def __init__(self, matrix, inverse=None):
-        self.__matrix = matrix
-        self.__inverse = inverse
+
+@dataclass
+class Transform:
+    matrix: Any
+    inverse: Any = None
 
     @property
     def inverse(self):
-        if self.__inverse is not None:
-            return Transform(self.__inverse, self.__matrix)
+        if self.inverse is not None:
+            return Transform(self.inverse, self.matrix)
 
-        inv = np.linalg.inv(self.__matrix)
-        return Transform(inv, self.__matrix)
-
-    @property
-    def matrix(self):
-        return self.__matrix
+        inv = np.linalg.inv(self.matrix)
+        return Transform(inv, self.matrix)
 
     def __matmul__(self, other):
         if isinstance(other, Vec3):
-            return Vec3.from_array(self.__matrix @ other.vec)
+            return Vec3.from_array(self.matrix @ other.vec)
 
         if isinstance(other, Point3):
-            return Point3.from_array(self.__matrix @ other.vec)
+            return Point3.from_array(self.matrix @ other.vec)
 
         if isinstance(other, Ray):
-            return Ray(Point3.from_array(self.__matrix @ other.origin.vec), Vec3.from_array(self.__matrix @ other.direction.vec))
+            return Ray(Point3.from_array(self.matrix @ other.origin.vec), Vec3.from_array(self.matrix @ other.direction.vec))
 
     @classmethod
     def translation(cls, dx, dy, dz):

@@ -1,22 +1,12 @@
+from dataclasses import dataclass
+from .point import Point3
+from .vec3 import Vec3
+from .material import Material
+
+
+@dataclass
 class Intersection:
-    def __init__(self, point, normal, t, material):
-        self.__point = point
-        self.__normal = normal
-        self.__t = t
-        self.__material = material
-
-    @property
-    def point(self):
-        return self.__point
-
-    @property
-    def normal(self):
-        return self.__normal
-
-    @property
-    def t(self):
-        return self.__t
-
-    @property
-    def material(self):
-        return self.__material
+    point: Point3
+    normal: Vec3
+    t: float
+    material: Material
