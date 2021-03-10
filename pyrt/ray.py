@@ -9,7 +9,7 @@ class Ray:
     direction: Vec3
 
     def point_at(self, t):
-        return self.__origin + (t * self.__direction)
+        return self.origin + (t * self.direction)
 
     def __str__(self):
         return f'{self.origin} + t*{self.direction}'

@@ -1,20 +1,19 @@
 from typing import Any
-from dataclasses import dataclass
 import numpy as np
 from .vec3 import Vec3
 from .point import Point3
 from .ray import Ray
 
 
-@dataclass
 class Transform:
-    matrix: Any
-    inverse: Any = None
+    def __init__(self, matrix: Any, inverse: Any = None) -> None:
+        self.matrix = matrix
+        self._inverse = inverse
 
     @property
     def inverse(self):
-        if self.inverse is not None:
-            return Transform(self.inverse, self.matrix)
+        if self._inverse is not None:
+            return Transform(self._inverse, self.matrix)
 
         inv = np.linalg.inv(self.matrix)
         return Transform(inv, self.matrix)
@@ -27,7 +26,8 @@ class Transform:
             return Point3.from_array(self.matrix @ other.vec)
 
         if isinstance(other, Ray):
-            return Ray(Point3.from_array(self.matrix @ other.origin.vec), Vec3.from_array(self.matrix @ other.direction.vec))
+            return Ray(Point3.from_array(self.matrix @ other.origin.vec),
+                       Vec3.from_array(self.matrix @ other.direction.vec))
 
     @classmethod
     def translation(cls, dx, dy, dz):
