@@ -16,10 +16,14 @@ class Renderer:
     width: int
 
     def render(self, scanlines=[]):
+        print(f'width = {self.width}')
+        print(f'height = {self.height}')
+        print(f'samples = {self.samples}')
         lines = scanlines
         if len(lines) == 0:
             lines = range(self.height - 1, -1, -1)
-        for j in tqdm(lines):
+        t = tqdm(total=len(lines)*self.width*self.samples, unit='samples')
+        for j in lines:
             for i in range(self.width):
                 c = Vec3(0, 0, 0)
                 for s in range(self.samples):
@@ -27,7 +31,9 @@ class Renderer:
                     v = (j + uniform(0, 1)) / float(self.height - 1)
                     ray = self.camera.ray(u, v)
                     c = c + color(ray, self.scene)
+                    t.update()
                 self.film.set_pixel(i, j, c / self.samples)
+        t.close()
 
 
 def color(ray, scene):
