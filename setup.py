@@ -37,7 +37,7 @@ setup(
     description="An python-based raytracer inspired by the book Raytracing in one Weekend",
     entry_points={
         'console_scripts': [
-            'pyrt=pyrt.cli:main',
+            'pyrt=pyrt.__main__:main',
         ],
     },
     install_requires=requirements,
