@@ -1,9 +1,19 @@
-import numpy as np
+from dataclasses import InitVar, dataclass, field
 from math import sqrt
+from typing import Any
 
+import numpy as np
+
+
+@dataclass
 class Vec3:
-    def __init__(self, x, y, z):
-        self.__vec = np.array([x,y,z,0], dtype=np.float)
+    __vec: Any = field(init=False)
+    x: InitVar[float]
+    y: InitVar[float]
+    z: InitVar[float]
+    
+    def __post_init__(self, px, py, pz):
+        self.__vec = np.array([px, py, pz, 0])
 
     @property
     def vec(self):
@@ -15,7 +25,7 @@ class Vec3:
 
     def __add__(self, other):
         if isinstance(other, Vec3):
-            return Vec3.from_array(self.vec + other.__vec)    
+            return Vec3.from_array(self.vec + other.__vec)
         return NotImplemented
 
     def __sub__(self, other):
@@ -50,7 +60,7 @@ class Vec3:
     @property
     def x(self):
         return self.__vec[0]
-    
+
     @property
     def y(self):
         return self.__vec[1]
@@ -66,7 +76,7 @@ class Vec3:
     @property
     def g(self):
         return (int)(self.y * 255.0)
-    
+
     @property
     def b(self):
         return (int)(self.z * 255.0)
