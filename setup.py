@@ -13,7 +13,9 @@ requirements = ['Click>=7.0',
                 "tqdm==4.46.0",
                 "redis==3.5.3",
                 "celery==4.4.0",
-                "requests==2.23.0"]
+                "requests==2.23.0",
+                "jsonpickle==2.0.0",
+                "dacite"]
 
 setup_requirements = ['pytest-runner', ]
 

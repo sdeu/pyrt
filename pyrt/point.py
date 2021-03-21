@@ -1,5 +1,7 @@
 import numpy as np
+
 from .vec3 import Vec3
+
 
 class Point3:
     def __init__(self, x, y, z):

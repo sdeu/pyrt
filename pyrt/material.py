@@ -1,9 +1,12 @@
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
+from math import cos, pi, sin, sqrt
 from random import uniform
-from math import pi, sqrt, cos, sin
+
 import numpy as np
-from .vec3 import Vec3
+
 from .ray import Ray
+from .vec3 import Vec3
 
 
 class Material(ABC):
@@ -22,27 +25,27 @@ def random_unit_vector():
 
 def reflect(ray, intersection):
     r_n = ray.direction.normalize()
-    r = r_n - ((2 * np.dot(intersection.normal.vec[:3], r_n.vec[:3])) * intersection.normal)
+    r = r_n - \
+        ((2 * np.dot(intersection.normal.vec[:3],
+         r_n.vec[:3])) * intersection.normal)
     return Ray(intersection.point, r)
 
 
+@dataclass
 class Lambert(Material):
-
-    def __init__(self, color):
-        self.__color = color
+    color: Vec3
 
     def scatter(self, ray, intersection):
         r = intersection.normal + random_unit_vector()
-        return Ray(intersection.point + (intersection.normal * 0.001), r), self.__color
+        return Ray(intersection.point + (intersection.normal * 0.001), r), self.color
 
 
+@dataclass
 class Metal(Material):
-
-    def __init__(self, color):
-        self.__color = color
+    color: Vec3
 
     def scatter(self, ray, intersection):
         r = reflect(ray, intersection)
         if np.dot(r.direction.vec[:3], intersection.normal.vec[:3]) > 0:
-            return r, self.__color
+            return r, self.color
         return None

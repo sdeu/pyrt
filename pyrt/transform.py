@@ -3,20 +3,25 @@ import numpy as np
 from .vec3 import Vec3
 from .point import Point3
 from .ray import Ray
+from dataclasses import dataclass, InitVar, field
+from abc import ABC
 
-
-class Transform:
-    def __init__(self, matrix: Any, inverse: Any = None) -> None:
-        self.matrix = matrix
-        self._inverse = inverse
+@dataclass
+class Transform(ABC):
+    matrix: Any = field(init=False)
+    inverse_matrix: Any = field(init=False)
 
     @property
     def inverse(self):
-        if self._inverse is not None:
-            return Transform(self._inverse, self.matrix)
+        if self.inverse_matrix is not None:
+            t = Transform()
+            t.matrix, t.inverse_matrix = self.inverse_matrix, self.matrix
+            return t
 
         inv = np.linalg.inv(self.matrix)
-        return Transform(inv, self.matrix)
+        t = Transform()
+        t.matrix, t.inverse_matrix = inv, self.matrix
+        return t
 
     def __matmul__(self, other):
         if isinstance(other, Vec3):
@@ -29,15 +34,19 @@ class Transform:
             return Ray(Point3.from_array(self.matrix @ other.origin.vec),
                        Vec3.from_array(self.matrix @ other.direction.vec))
 
-    @classmethod
-    def translation(cls, dx, dy, dz):
-        matrix = np.identity(4)
-        matrix[0][3] = dx
-        matrix[1][3] = dy
-        matrix[2][3] = dz
+@dataclass
+class Translation(Transform):
+    dx: InitVar[float]
+    dy: InitVar[float]
+    dz: InitVar[float]
 
-        inverse = np.identity(4)
-        inverse[0][3] = -dx
-        inverse[1][3] = -dy
-        inverse[2][3] = -dz
-        return Transform(matrix, inverse)
+    def __post_init__(self, dx, dy, dz):
+        self.matrix = np.identity(4)
+        self.matrix[0][3] = dx
+        self.matrix[1][3] = dy
+        self.matrix[2][3] = dz
+
+        self.inverse_matrix = np.identity(4)
+        self.inverse_matrix[0][3] = -dx
+        self.inverse_matrix[1][3] = -dy
+        self.inverse_matrix[2][3] = -dz

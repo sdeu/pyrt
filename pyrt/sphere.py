@@ -1,32 +1,34 @@
 from dataclasses import dataclass, field
-import numpy as np
 from math import sqrt
-from .shape import Shape
+
+import numpy as np
+
 from .intersection import Intersection
-from .vec3 import Vec3
-from .transform import Transform
 from .material import Material
+from .shape import Shape
+from .transform import Transform
+from .vec3 import Vec3
 
 
 @dataclass
 class Sphere(Shape):
-    __radius: float
-    __object_to_world: Transform
-    __material: Material
-    __world_to_object: Transform = field(init=False)
+    radius: float
+    object_to_world: Transform
+    material: Material
+    world_to_object: Transform = field(init=False)
 
     def __post_init__(self):
-        self.__world_to_object = self.__object_to_world.inverse
+        self.world_to_object = self.object_to_world.inverse
 
     def hit(self, ray):
-        r = self.__world_to_object @ ray
+        r = self.world_to_object @ ray
         t = self.__hit_internal(
-            r.direction.vec[:3], r.origin.vec[:3], self.__radius)
+            r.direction.vec[:3], r.origin.vec[:3], self.radius)
 
         if t is not None:
             intersection_point = r.point_at(t)
-            return Intersection(self.__object_to_world @ intersection_point,
-                                Vec3.from_array(intersection_point.vec).normalize(), t, self.__material)
+            return Intersection(self.object_to_world @ intersection_point,
+                                Vec3.from_array(intersection_point.vec).normalize(), t, self.material)
         return None
 
     def __hit_internal(self, direction, origin, radius):

@@ -1,5 +1,5 @@
 import numpy as np
-from pyrt.transform import Transform
+from pyrt.transform import Translation
 from pyrt.point import Point3
 from pyrt.vec3 import Vec3
 from pyrt.ray import Ray
@@ -7,7 +7,7 @@ from pyrt.ray import Ray
 
 def test_translate_point():
     p = Point3(1, 1, 1)
-    m = Transform.translation(1, 2, 3)
+    m = Translation(1, 2, 3)
     t = m @ p
     assert t.x == 2
     assert t.y == 3
@@ -16,14 +16,14 @@ def test_translate_point():
 
 def test_translate_vector():
     v = Vec3(1, 1, 1)
-    m = Transform.translation(1, 2, 3)
+    m = Translation(1, 2, 3)
     t = m @ v
     assert np.array_equal(t.vec, np.array([1.0, 1.0, 1.0, 0.0]))
 
 
 def test_translate_ray():
     r = Ray(Point3(0, 0, 0), Vec3(0, 0, -1))
-    m = Transform.translation(1, 2, 3)
+    m = Translation(1, 2, 3)
     t = m @ r
     assert np.array_equal(t.origin.vec, np.array([1.0, 2.0, 3.0, 1.0]))
     assert np.array_equal(t.direction.vec, np.array([0.0, 0.0, -1.0, 0.0]))
@@ -31,6 +31,6 @@ def test_translate_ray():
 
 def test_translate_ray_2():
     r = Ray(Point3(0, 0, 0), Vec3(0, 0, -1))
-    m = Transform.translation(0, 0, -10)
+    m = Translation(0, 0, -10)
     t = m @ r
     assert np.array_equal(t.origin.vec, np.array([0.0, 0.0, -10.0, 1.0]))

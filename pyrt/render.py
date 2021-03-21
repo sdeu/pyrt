@@ -1,8 +1,11 @@
 from dataclasses import dataclass
-from .film import Film
-from .camera import Camera
-from random import uniform, seed
+from random import seed, uniform
+
 from tqdm import tqdm
+
+from .camera import Camera
+from .film import Film
+from .scene import Scene
 from .vec3 import Vec3
 
 
@@ -10,7 +13,7 @@ from .vec3 import Vec3
 class Renderer:
     film: Film
     camera: Camera
-    scene: list
+    scene: Scene
     samples: int
     height: int
     width: int
@@ -37,7 +40,7 @@ class Renderer:
 
 
 def color(ray, scene):
-    return color_internal(ray, scene, 5)
+    return color_internal(ray, scene.objects, 5)
 
 
 def color_internal(ray, scene, depth):
