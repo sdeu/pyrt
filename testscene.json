@@ -1,0 +1,54 @@
+{
+    "film": {
+        "file_name": "test.bmp",
+        "samples": 10,
+        "width": 100,
+        "height": 56
+    },
+    "scene": {
+        "objects": [
+            {
+                "name": "Sphere",
+                "radius": 1,
+                "object_to_world": {"name": "Translation", "args": [1, -0.5, -5]},
+                "material": {
+                    "name": "Lambert",
+                    "args": [
+                        1,
+                        0,
+                        0
+                    ]
+                }
+            
+            },
+            {
+                "name": "Sphere",
+                "radius": 2,
+                "object_to_world": {"name": "Translation", "args": [-2, -1.5, -5]},
+                "material": {
+                    "name": "Metal",
+                    "args": [
+                        0.9,
+                        0.9,
+                        0.9
+                    ]
+                }
+            
+            },
+            {
+                "name": "Sphere",
+                "radius": 200,
+                "object_to_world": {"name": "Translation", "args": [1, 200.5, -10]},
+                "material": {
+                    "name": "Lambert",
+                    "args": [
+                        0,
+                        1,
+                        0
+                    ]
+                }
+            
+            }
+        ]
+    }
+}

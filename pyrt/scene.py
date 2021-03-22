@@ -1,5 +1,7 @@
 from dataclasses import dataclass
+from typing import List
+from .shape import Shape
 
 @dataclass
 class Scene:
-    objects: list
+    objects: List[Shape]
