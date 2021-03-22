@@ -9,7 +9,7 @@ with open('README.rst') as readme_file:
 
 requirements = ['Click>=7.0',
                 "numpy==1.18.1",
-                "Pillow==7.1.2",
+                "Pillow==8.1.1",
                 "tqdm==4.46.0",
                 "redis==3.5.3",
                 "celery==4.4.0",
