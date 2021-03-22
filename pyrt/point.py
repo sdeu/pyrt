@@ -1,6 +1,6 @@
 import numpy as np
 
-from .vec3 import Vec3
+from vec3 import Vec3
 
 
 class Point3:

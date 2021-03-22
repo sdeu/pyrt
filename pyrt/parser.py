@@ -4,12 +4,12 @@ from typing import Any
 
 from dacite import Config, from_dict
 
-from .file import File
-from .transform import Translation, Transform
-from .vec3 import Vec3
-from .material import Lambert, Metal, Material
-from .shape import Shape
-from .sphere import Sphere
+from file import File
+from transform import Translation, Transform
+from vec3 import Vec3
+from material import Lambert, Metal, Material
+from shape import Shape
+from sphere import Sphere
 
 def transformation_from_json(t: Any) -> Any:
     if t['name'] == 'Translation':

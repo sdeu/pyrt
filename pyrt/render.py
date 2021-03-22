@@ -3,10 +3,10 @@ from random import seed, uniform
 
 from tqdm import tqdm
 
-from .camera import Camera
-from .film import Film
-from .scene import Scene
-from .vec3 import Vec3
+from camera import Camera
+from film import Film
+from scene import Scene
+from vec3 import Vec3
 
 
 @dataclass

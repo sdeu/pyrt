@@ -1,6 +1,6 @@
-from .vec3 import Vec3
-from .point import Point3
-from .ray import Ray
+from vec3 import Vec3
+from point import Point3
+from ray import Ray
 
 class Camera:
     def __init__(self, width):

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from .point import Point3
-from .vec3 import Vec3
+from point import Point3
+from vec3 import Vec3
 
 
 @dataclass

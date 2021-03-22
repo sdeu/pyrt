@@ -4,7 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pyrt = {editable = true, path = "."}
+click = "*"
+numpy = "*"
+pillow = "*"
+tqdm = "*"
+dacite = "*"
 pytest = "*"
 
 [dev-packages]
