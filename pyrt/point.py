@@ -1,11 +1,20 @@
+from dataclasses import InitVar, dataclass, field
+from typing import Any
+
 import numpy as np
 
-from vec3 import Vec3
+from pyrt.vec3 import Vec3
 
 
+@dataclass
 class Point3:
-    def __init__(self, x, y, z):
-        self.__vec = np.array([x,y,z, 1], dtype=np.float)
+    __vec: Any = field(init=False)
+    x: InitVar[float]
+    y: InitVar[float]
+    z: InitVar[float]
+    
+    def __post_init__(self, px, py, pz):
+        self.__vec = np.array([px, py, pz, 1])
 
     @classmethod
     def from_array(cls, p):
@@ -45,7 +54,7 @@ class Point3:
 
     def __eq__(self, other):
         if isinstance(other, Point3):
-            return np.array_equal(self.__vec, other.__vec)
+            return np.array_equal(self.__vec, other.vec)
         return NotImplemented
 
     def __hash__(self):

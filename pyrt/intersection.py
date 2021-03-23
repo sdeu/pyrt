@@ -1,7 +1,7 @@
 from dataclasses import dataclass
-from point import Point3
-from vec3 import Vec3
-from material import Material
+from pyrt.point import Point3
+from pyrt.vec3 import Vec3
+from pyrt.material import Material
 
 
 @dataclass

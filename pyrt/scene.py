@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import List
-from shape import Shape
+from pyrt.shape import Shape
 
 @dataclass
 class Scene:

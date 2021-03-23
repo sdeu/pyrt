@@ -1,6 +1,6 @@
 from dataclasses import dataclass
-from scene import Scene
-from film import Film
+from pyrt.scene import Scene
+from pyrt.film import Film
 
 @dataclass
 class File:

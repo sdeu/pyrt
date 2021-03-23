@@ -3,11 +3,11 @@ from math import sqrt
 
 import numpy as np
 
-from intersection import Intersection
-from material import Material
-from shape import Shape
-from transform import Transform
-from vec3 import Vec3
+from pyrt.intersection import Intersection
+from pyrt.material import Material
+from pyrt.shape import Shape
+from pyrt.transform import Transform
+from pyrt.vec3 import Vec3
 
 
 @dataclass
