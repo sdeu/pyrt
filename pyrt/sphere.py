@@ -28,7 +28,7 @@ class Sphere(Shape):
         if t is not None:
             intersection_point = r.point_at(t)
             return Intersection(self.object_to_world @ intersection_point,
-                                Vec3.from_array(intersection_point.vec).normalize(), t, self.material)
+                                Vec3(vec=intersection_point.vec).normalize(), t, self.material)
         return None
 
     def __hit_internal(self, direction, origin, radius):

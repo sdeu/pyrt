@@ -25,14 +25,14 @@ class Transform(ABC):
 
     def __matmul__(self, other):
         if isinstance(other, Vec3):
-            return Vec3.from_array(self.matrix @ other.vec)
+            return Vec3(vec=self.matrix @ other.vec)
 
         if isinstance(other, Point3):
-            return Point3.from_array(self.matrix @ other.vec)
+            return Point3(vec=self.matrix @ other.vec)
 
         if isinstance(other, Ray):
-            return Ray(Point3.from_array(self.matrix @ other.origin.vec),
-                       Vec3.from_array(self.matrix @ other.direction.vec))
+            return Ray(Point3(vec=self.matrix @ other.origin.vec),
+                       Vec3(vec=self.matrix @ other.direction.vec))
 
 @dataclass
 class Translation(Transform):
