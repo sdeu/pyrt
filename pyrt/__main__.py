@@ -11,13 +11,15 @@ from pyrt.parser import parse_file
 
 @click.command()
 @click.argument('filepath')
-def main(filepath):
+@click.option('--nprocs', default=8)
+@click.option('--chunksize', default=4)
+def main(filepath, nprocs, chunksize):
 
     f = parse_file(filepath)
     camera = Camera(f.film.width)
     renderer = Renderer(width=f.film.width, height=f.film.height,
                         samples=f.film.samples, scene=f.scene, camera=camera, film=f.film)
-    renderer.render()
+    renderer.render(nprocs, chunksize)
     f.film.save()
 
     return 0
