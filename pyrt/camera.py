@@ -3,8 +3,8 @@ from pyrt.point import Point3
 from pyrt.ray import Ray
 
 class Camera:
-    def __init__(self, width):
-        ascpect_ratio = 16.0 / 9.0
+    def __init__(self, width, height):
+        ascpect_ratio = width / height
 
         viewport_height = 2.0   
         viewport_width = ascpect_ratio * viewport_height
@@ -18,4 +18,5 @@ class Camera:
         self.__lower_left_corner = self.__origin - self.__horizontal/2 - self.__vertical/2 - Vec3(0,0,focal_length)
 
     def ray(self, u, v):
-        return Ray(self.__origin, self.__lower_left_corner + u*self.__horizontal + v*self.__vertical - self.__origin)
+        d = self.__lower_left_corner + u*self.__horizontal + v*self.__vertical - self.__origin
+        return Ray(self.__origin, d.normalize())

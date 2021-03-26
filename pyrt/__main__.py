@@ -16,7 +16,7 @@ from pyrt.parser import parse_file
 def main(filepath, nprocs, chunksize):
 
     f = parse_file(filepath)
-    camera = Camera(f.film.width)
+    camera = Camera(f.film.width, f.film.height)
     renderer = Renderer(width=f.film.width, height=f.film.height,
                         samples=f.film.samples, scene=f.scene, camera=camera, film=f.film)
     renderer.render(nprocs, chunksize)

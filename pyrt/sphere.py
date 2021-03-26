@@ -32,11 +32,10 @@ class Sphere(Shape):
         return None
 
     def __hit_internal(self, direction, origin, radius):
-        A = np.dot(direction, direction)
         B = 2 * np.dot(origin, direction)
         C = np.dot(origin, origin) - radius ** 2
 
-        d = B ** 2 - 4 * A * C
+        d = B ** 2 - 4 * C
 
         if d < 0:
             return None
@@ -49,7 +48,7 @@ class Sphere(Shape):
         else:
             q = -0.5 * (B + root_d)
 
-        t0 = q / A
+        t0 = q
         t1 = C / q
 
         if t1 < 0 and t0 < 0:
